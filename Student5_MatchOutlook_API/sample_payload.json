@@ -1,0 +1,46 @@
+{
+  "match": {
+    "title": "Alpha vs Bravo",
+    "total_overs": 20,
+    "target": 121
+  },
+  "innings": {
+    "innings_number": 2,
+    "total_overs_limit": 20,
+    "target": 121
+  },
+  "balls": [
+    {
+      "over_number": 1,
+      "ball_number": 1,
+      "runs_off_bat": 4,
+      "extras": 0,
+      "is_legal_delivery": true,
+      "wicket_fell": false
+    },
+    {
+      "over_number": 1,
+      "ball_number": 2,
+      "runs_off_bat": 1,
+      "extras": 0,
+      "is_legal_delivery": true,
+      "wicket_fell": false
+    },
+    {
+      "over_number": 1,
+      "ball_number": 3,
+      "runs_off_bat": 6,
+      "extras": 0,
+      "is_legal_delivery": true,
+      "wicket_fell": false
+    },
+    {
+      "over_number": 1,
+      "ball_number": 4,
+      "runs_off_bat": 0,
+      "extras": 0,
+      "is_legal_delivery": true,
+      "wicket_fell": true
+    }
+  ]
+}
