@@ -22,34 +22,21 @@ class MatchInfo(BaseModel):
 class InningsInfo(BaseModel):
     innings_number: Optional[int] = Field(default=None, ge=1)
     batting_team: Optional[str] = None
-    bowling_team: Optional[str] = None
     total_overs_limit: Optional[int] = Field(default=None, gt=0)
     target: Optional[int] = Field(default=None, gt=0)
 
 
-class MatchStateRequest(BaseModel):
+class RequiredRunRateRequest(BaseModel):
     match: MatchInfo = Field(default_factory=MatchInfo)
     innings: InningsInfo = Field(default_factory=InningsInfo)
     balls: list[BallEvent] = Field(default_factory=list)
 
 
-class MatchStateResponse(BaseModel):
-    match: str
-    innings_number: Optional[int] = None
-    score: str
-    overs: str
-    wickets: int
-    batting_team: Optional[str] = None
-    bowling_team: Optional[str] = None
+class RequiredRunRateResponse(BaseModel):
     target: Optional[int] = None
-    runs: int
-    legal_balls: int
-    total_balls: int
+    current_score: str
+    runs_needed: int
     balls_remaining: int
-    current_run_rate: float
-    runs_needed: Optional[int] = None
-    required_run_rate: Optional[float] = None
-    wickets_remaining: int
-    match_state: str
-    chase_status: str
+    required_run_rate: float
+    equation: str
     message: str

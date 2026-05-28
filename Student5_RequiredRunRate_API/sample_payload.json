@@ -1,14 +1,11 @@
 {
   "match": {
-    "match_id": "match-001",
     "title": "Alpha vs Bravo",
     "total_overs": 20,
     "target": 121
   },
   "innings": {
     "innings_number": 2,
-    "batting_team": "Bravo",
-    "bowling_team": "Alpha",
     "total_overs_limit": 20,
     "target": 121
   },
