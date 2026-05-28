@@ -45,9 +45,28 @@ set KHEL_DB_PATH=C:\path\to\db.sqlite3
 ```
 
 ## Render Deployment
-Use this start command on Render:
+This repo includes a root-level `render.yaml` Blueprint for deploying this API on Render.
+
+Blueprint deployment link:
+```text
+https://dashboard.render.com/blueprint/new?repo=https://github.com/Om-Batavia/Khel.AI-Om
+```
+
+The Blueprint uses these commands:
+```bash
+cd Student5_LiveScoreboard_API && pip install -r requirements.txt
+cd Student5_LiveScoreboard_API && uvicorn main:app --host 0.0.0.0 --port $PORT
+```
+
+Manual Render start command:
 ```bash
 uvicorn main:app --host 0.0.0.0 --port $PORT
+```
+
+After deployment, replace `<render-url>` with the Render service URL:
+```text
+Docs: https://<render-url>/docs
+Endpoint: https://<render-url>/student5/live-scoreboard/1
 ```
 
 ## Input Schema
