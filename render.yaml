@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: student5-live-scoreboard-api
+    runtime: python
+    plan: free
+    branch: main
+    autoDeploy: true
+    buildCommand: cd Student5_LiveScoreboard_API && pip install -r requirements.txt
+    startCommand: cd Student5_LiveScoreboard_API && uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /
