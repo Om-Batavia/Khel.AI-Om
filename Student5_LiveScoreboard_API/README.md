@@ -3,6 +3,8 @@
 ## Objective
 Build a live match scoreboard API that accepts a match identifier and returns the latest or active innings scoreboard in clean frontend-ready JSON.
 
+This version reads from the live SQLite database used by the Khel AI Django app instead of hard-coded sample data.
+
 ## API Summary
 - API name: Live Match Scoreboard API
 - Framework: FastAPI
@@ -15,6 +17,7 @@ Build a live match scoreboard API that accepts a match identifier and returns th
 - `services.py`
 - `requirements.txt`
 - `README.md`
+- `db.sqlite3`
 - GitHub repo URL: `https://github.com/Om-Batavia/Khel.AI-Om`
 - Render deployment URL: Add deployed Render URL after deployment
 - Admin handover documentation: Included below
@@ -32,7 +35,14 @@ uvicorn main:app --reload
 Local URLs:
 - API root: `http://127.0.0.1:8000/`
 - Swagger docs: `http://127.0.0.1:8000/docs`
-- Live Scoreboard endpoint: `http://127.0.0.1:8000/student5/live-scoreboard/match-001`
+- Live Scoreboard endpoint: `http://127.0.0.1:8000/student5/live-scoreboard/1`
+
+## Database Configuration
+By default, the API reads `db.sqlite3` from this API folder. You can override the database path with:
+
+```bash
+set KHEL_DB_PATH=C:\path\to\db.sqlite3
+```
 
 ## Render Deployment
 Use this start command on Render:
@@ -50,7 +60,13 @@ GET /student5/live-scoreboard/{match_id}
 Example:
 
 ```text
-GET /student5/live-scoreboard/match-001
+GET /student5/live-scoreboard/1
+```
+
+The API also accepts an exact match title, such as:
+
+```text
+GET /student5/live-scoreboard/First%20Match
 ```
 
 ## Output Schema
@@ -58,73 +74,73 @@ Expected output fields:
 
 ```json
 {
-  "match": "Alpha vs Bravo",
-  "venue": "Khel AI Arena",
+  "match": "First Match",
+  "venue": "Choithram School, Indore",
   "innings_number": 2,
-  "batting_team": "Bravo",
-  "bowling_team": "Alpha",
-  "score": "15/1",
-  "overs": "1.1",
-  "run_rate": 12.86,
+  "batting_team": "Buddha House",
+  "bowling_team": "Gandhi House",
+  "score": "22/0",
+  "overs": "0.4",
+  "run_rate": 33.0,
   "top_batter": {
-    "name": "Rohan Mehta",
-    "runs": 6,
-    "balls": 3
+    "name": "Akshat Iyer",
+    "runs": 22,
+    "balls": 4
   },
   "top_bowler": {
-    "name": "Kabir Rao",
-    "wickets": 1,
-    "runs_conceded": 14,
-    "overs": "1.0"
+    "name": "Vihaan Patel",
+    "wickets": 0,
+    "runs_conceded": 22,
+    "overs": "0.4"
   },
   "recent_balls": [],
-  "message": "Live scoreboard returned for innings 2."
+  "message": "Live scoreboard returned from database innings 3."
 }
 ```
 
 ## Example Request
 ```bash
-curl "http://127.0.0.1:8000/student5/live-scoreboard/match-001"
+curl "http://127.0.0.1:8000/student5/live-scoreboard/1"
 ```
 
 ## Example Response
 ```json
 {
-  "match": "Alpha vs Bravo",
-  "venue": "Khel AI Arena",
+  "match": "First Match",
+  "venue": "Choithram School, Indore",
   "innings_number": 2,
-  "batting_team": "Bravo",
-  "bowling_team": "Alpha",
-  "score": "15/1",
-  "overs": "1.1",
-  "run_rate": 12.86,
+  "batting_team": "Buddha House",
+  "bowling_team": "Gandhi House",
+  "score": "22/0",
+  "overs": "0.4",
+  "run_rate": 33.0,
   "top_batter": {
-    "name": "Rohan Mehta",
-    "runs": 6,
-    "balls": 3,
+    "name": "Akshat Iyer",
+    "runs": 22,
+    "balls": 4,
     "wickets": null,
     "runs_conceded": null,
     "overs": null
   },
   "top_bowler": {
-    "name": "Kabir Rao",
+    "name": "Vihaan Patel",
     "runs": null,
     "balls": null,
-    "wickets": 1,
-    "runs_conceded": 14,
-    "overs": "1.0"
+    "wickets": 0,
+    "runs_conceded": 22,
+    "overs": "0.4"
   },
   "recent_balls": [
     {
-      "over": "0.2",
-      "striker": "Dev Singh",
-      "bowler": "Kabir Rao",
-      "runs": 1,
+      "over": "0.1",
+      "striker": "Akshat Iyer",
+      "bowler": "Vihaan Patel",
+      "runs": 6,
       "wicket": false,
-      "description": "1 run extra"
+      "description": "6 runs"
     }
   ],
-  "message": "Live scoreboard returned for innings 2."
+  "message": "Live scoreboard returned from database innings 3."
 }
 ```
 
@@ -132,24 +148,27 @@ curl "http://127.0.0.1:8000/student5/live-scoreboard/match-001"
 - Unknown `match_id` returns `404` with a clean error message.
 - Blank `match_id` returns a safe validation error.
 - A match with no innings returns a zero scoreboard with a clear message.
-- If an active innings exists, that innings is used.
-- If no innings is marked active, the latest innings number is used.
-- Score, wickets, legal balls, overs, and run rate are calculated from saved ball events.
+- The API reads matches, innings, teams, players, and ball events from SQLite.
+- If an incomplete innings exists, the latest incomplete innings is used.
+- If all innings are complete, the latest innings number is used.
+- Score, wickets, legal balls, overs, and run rate are calculated from database ball events.
 - Recent balls returns the latest six saved ball events.
+- Swagger includes example `match_id` values and example success/error responses.
 
 ## Admin Handover Documentation
 
 ### File Responsibilities
 - `main.py`: FastAPI app setup, root route, and live-scoreboard route.
 - `schemas.py`: Pydantic response models.
-- `services.py`: Saved match data store, active/latest innings lookup, and scoreboard calculations.
+- `services.py`: SQLite database connection, active/latest innings lookup, and scoreboard calculations.
 - `requirements.txt`: Python package dependencies.
+- `db.sqlite3`: Local SQLite database with saved match, innings, player, team, and ball-event rows.
 - `README.md`: Setup, schemas, examples, and handover notes.
 
 ### Main Endpoint
 `GET /student5/live-scoreboard/{match_id}`
 
-The route accepts `match_id`, then sends it to `get_live_scoreboard()` in `services.py`. The service layer chooses the active innings first, falls back to the latest innings, and calculates the frontend-ready scoreboard.
+The route accepts `match_id`, then sends it to `get_live_scoreboard()` in `services.py`. The service layer queries SQLite, chooses the latest incomplete innings first, falls back to the latest innings, and calculates the frontend-ready scoreboard.
 
 ### Business Logic
 The service layer calculates:
@@ -165,6 +184,6 @@ The service layer calculates:
 ### Testing Checklist
 1. Run `uvicorn main:app --reload`.
 2. Open `http://127.0.0.1:8000/docs`.
-3. Test `GET /student5/live-scoreboard/match-001`.
-4. Test `GET /student5/live-scoreboard/match-empty` for a no-innings case.
-5. Test an unknown match ID, such as `unknown-match`, to confirm clean `404` handling.
+3. Test `GET /student5/live-scoreboard/1`.
+4. Test `GET /student5/live-scoreboard/First%20Match`.
+5. Test an unknown match ID, such as `999`, to confirm clean `404` handling.
