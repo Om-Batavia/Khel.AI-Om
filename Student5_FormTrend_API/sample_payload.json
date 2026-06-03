@@ -1,0 +1,38 @@
+{
+  "player": {
+    "player_id": "P-005",
+    "player_name": "Sample Batter",
+    "role": "batter"
+  },
+  "recent_performances": [
+    {
+      "match_id": "M-001",
+      "sequence_number": 1,
+      "runs_scored": 18,
+      "balls_faced": 20,
+      "was_out": true
+    },
+    {
+      "match_id": "M-002",
+      "sequence_number": 2,
+      "runs_scored": 26,
+      "balls_faced": 22,
+      "was_out": true
+    },
+    {
+      "match_id": "M-003",
+      "sequence_number": 3,
+      "runs_scored": 34,
+      "balls_faced": 24,
+      "was_out": false
+    },
+    {
+      "match_id": "M-004",
+      "sequence_number": 4,
+      "runs_scored": 48,
+      "balls_faced": 30,
+      "was_out": false
+    }
+  ],
+  "stable_slope_threshold": 0.15
+}
