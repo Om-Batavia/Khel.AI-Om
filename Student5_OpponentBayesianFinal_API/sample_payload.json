@@ -1,0 +1,57 @@
+{
+  "player": {
+    "player_id": "P-005",
+    "player_name": "Sample Batter",
+    "role": "batter"
+  },
+  "opponent_team_id": "T-002",
+  "opponent_team_name": "Bravo XI",
+  "prior_performances": [
+    {
+      "match_id": "M-001",
+      "runs_scored": 35,
+      "balls_faced": 28,
+      "was_out": true
+    },
+    {
+      "match_id": "M-002",
+      "runs_scored": 42,
+      "balls_faced": 31,
+      "was_out": false
+    },
+    {
+      "match_id": "M-003",
+      "runs_scored": 26,
+      "balls_faced": 22,
+      "was_out": true
+    },
+    {
+      "match_id": "M-004",
+      "runs_scored": 51,
+      "balls_faced": 36,
+      "was_out": false
+    }
+  ],
+  "opponent_performances": [
+    {
+      "match_id": "M-005",
+      "runs_scored": 58,
+      "balls_faced": 40,
+      "was_out": false
+    },
+    {
+      "match_id": "M-006",
+      "runs_scored": 45,
+      "balls_faced": 33,
+      "was_out": true
+    },
+    {
+      "match_id": "M-007",
+      "runs_scored": 62,
+      "balls_faced": 42,
+      "was_out": false
+    }
+  ],
+  "prior_weight": 6.0,
+  "max_evidence_weight": 10.0
+}
